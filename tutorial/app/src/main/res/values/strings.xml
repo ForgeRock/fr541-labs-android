@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">tutorial</string>
+
+    <!-- OAuth 2.0 Client Details -->
+    
+    <string name="forgerock_oauth_client_id" translatable="false">nativeclient</string>
+    <string name="forgerock_oauth_redirect_uri" translatable="false">com.example.tutorial:/oauth2redirect</string>
+    <string name="forgerock_oauth_scope" translatable="false">openid profile</string>
+    <integer name="forgerock_oauth_threshold" translatable="false">30</integer>
+
+    <!-- AM Instance Details -->
+    <string name="forgerock_url" translatable="false">https://openam-fr300-unigeza.forgeblocks.com/am</string>
+    <string name="forgerock_cookie_name" translatable="false">af6e3c362736235</string>
+    <string name="forgerock_realm" translatable="false">alpha</string>
+    <integer name="forgerock_timeout" translatable="false">30</integer>
+
+    <!-- Single Sign-On Details -->
+    <string name="forgerock">ForgeRock SDK Tutorial</string>
+    <string name="forgerock_account_name" translatable="false">demo</string>
+
+    <!-- DONE WEBAuthN -->
+    <string name="forgerock_webauthn_account_name" translatable="false">WebAuthn</string>
+
+    <!-- AM Tree Details -->
+
+    <!-- TODO ALL: select the current tree -->
+    <!--<string name="forgerock_auth_service" translatable="false">fr541</string>-->
+    <!--<string name="forgerock_auth_service" translatable="false">fr541-social-android</string>-->
+    <!--<string name="forgerock_auth_service" translatable="false">fr541-stage</string>-->
+    <!--<string name="forgerock_auth_service" translatable="false">fr541-suspend</string>-->
+    <!--<string name="forgerock_auth_service" translatable="false">fr541-register</string>-->
+    <!--<string name="forgerock_auth_service" translatable="false">fr541-password</string>-->
+    <!--<string name="forgerock_auth_service" translatable="false">fr541-device</string>-->
+    <!--<string name="forgerock_auth_service" translatable="false">fr541-webauthn-android</string>-->
+    <string name="forgerock_auth_service" translatable="false">fr541</string>
+
+    <!-- DONE WEBAUTHN: WebAuthn Biometric asset statements-->
+    <string name="asset_statements" translatable="false">[{"include": "https://openam-fr300-unigeza.forgeblocks.com/.well-known/assetlinks.json"}]</string>
+
+</resources>
