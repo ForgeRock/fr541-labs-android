@@ -97,21 +97,14 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
         });
 
-        //DONE CENTRAL: buttonListener
+        //TODO CENTRAL: buttonListener
         centralButton.setOnClickListener(view -> {
-            Logger.debug(TAG, "Centralized button is pressed");
-            FRUser.browser().login(this, this);
+
         });
 
-        //DONE CENTRAL: logout
+        //TODO CENTRAL: logout
         logoutButton.setOnClickListener(view -> {
-            Logger.debug(TAG, "Logout button is pressed");
-            try {
-                FRUser.getCurrentUser().logout();
-            } catch (Exception e) {
-                Logger.error(TAG, e.getMessage(), e);
-            }
-            updateStatus();
+
         });
 
         updateStatus();
@@ -143,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 status.setText("User is not authenticated");
                 //TODO USERINFO: get userinfo or tokeninfo and display
 
-                //DONE CENTR 11: comment setEnabled
                 loginButton.setText("Login");
                 loginButton.setEnabled(true);
                 logoutButton.setEnabled(false);
