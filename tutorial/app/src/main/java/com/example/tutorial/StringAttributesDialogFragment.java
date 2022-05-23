@@ -74,7 +74,7 @@ public class StringAttributesDialogFragment extends DialogFragment {
         LinearLayout stringAttrLayout = view.findViewById(R.id.stringAttrLayout);
 
         //TODO REGISTER: display and obtain
-        
+
 
         Space space = new Space(getContext());
         space.setMinimumWidth(20);

@@ -161,12 +161,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
         runOnUiThread(() -> {
 
             //DONE FOLLOW: handle
-            //DONE STAGE: if
-            String stage = node.getStage();
-            if ("namepass".equals(stage)) {
-                NodeDialogFragment fragment = NodeDialogFragment.newInstance(node);
-                fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
-            } else {
+            //TODO STAGE: if
+
 
                 //DONE AUTH: getcallback
                 Callback callback = node.getCallbacks().get(0);
@@ -207,8 +203,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
                 }
 
-                //TODO STAGE: else ends here
-            }
+                //MARK STAGE: else ends here
+//            }
         });
     }
 
