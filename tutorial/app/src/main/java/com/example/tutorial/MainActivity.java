@@ -65,8 +65,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
         //TODO SELFSERVICE: interceptor
 
-        //DONE AUTH: init
-        FRAuth.start(this);
+        //TODO AUTH: init
 
         //TODO DEVICE: manually
 
@@ -94,8 +93,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
             Logger.debug(TAG, "Login button is pressed");
             //TODO SELFSERVICE:
 
-            //DONE AUTH: onclick
-            FRUser.login(getApplicationContext(), this);
+            //TODO AUTH: onclick
+
         });
 
         //DONE CENTRAL: buttonListener
@@ -164,8 +163,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
             //TODO STAGE: if
 
 
-                //DONE AUTH: getcallback
-                Callback callback = node.getCallbacks().get(0);
+                //TODO AUTH: getcallback
 
                 //TODO DEVICE: handle choicecallback
 
@@ -198,9 +196,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
 
                 } else {
-                    //DONE AUTH: dialog
-                    NodeDialogFragment fragment = NodeDialogFragment.newInstance(node);
-                    fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
+                    //TODO AUTH: dialog
+
                 }
 
                 //MARK STAGE: else ends here
