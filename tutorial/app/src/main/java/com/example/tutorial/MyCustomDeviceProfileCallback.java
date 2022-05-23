@@ -33,6 +33,7 @@ public class MyCustomDeviceProfileCallback extends DeviceProfileCallback {
     public void execute(Context context, FRListener<Void> listener) {
         FRDeviceCollector.FRDeviceCollectorBuilder builder = FRDeviceCollector.builder();
         if (isMetadata()) {
+            //DONE CUSTOMDEV: uncomment
             builder.collector(new MyCustomMetadataCollector());
         }
         if (isLocation()) {

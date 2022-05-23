@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
             }
         });
 
-//        //DONE DEVICE: alternative way
+//        //MARK DEVICE: alternative way
 //        FRDeviceCollector.DEFAULT.collect(this, new FRListener<JSONObject>() {
 //            @Override
 //            public void onSuccess(JSONObject result) {
@@ -296,20 +296,19 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                         }
                     });
 
-                    //DONE DEVICE: handle callback
+                //DONE DEVICE: handle callback
                 } else if (callback instanceof DeviceProfileCallback) {
                     Logger.warn(TAG, "Device Profile");
                     Context context = getApplicationContext();
 
-                    //MAR CUSTOMDEVICE: note that this is actually MyCustomDeviceProfileCallback
+                    //MARK CUSTOMDEVICE: note that this is actually MyCustomDeviceProfileCallback
                     ((DeviceProfileCallback) callback).execute(context, new FRListener<Void>() {
                         @Override
                         public void onSuccess(Void result) {
                             Logger.warn(TAG, "device success branch");
                             displayToast("Device Profile Collected");
 
-                            node.next(context /* QQ George, is it `getapplicationcontext` or `this` or what when? */,
-                                    MainActivity.this);
+                            node.next(context, MainActivity.this);
                         }
 
                         @Override
