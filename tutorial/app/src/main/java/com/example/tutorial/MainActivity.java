@@ -187,21 +187,18 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 //TODO DEVICE: handle callback
 
 
-                //DONE REGISTER: handle
-                if (callback instanceof StringAttributeInputCallback) {
-                    Logger.warn(TAG, "String Attribute Input Callback");
-                    StringAttributesDialogFragment fragment = StringAttributesDialogFragment.newInstance(node);
-                    fragment.show(getSupportFragmentManager(), StringAttributesDialogFragment.class.getName());
+                //TODO REGISTER: handle
+
 
                 //TODO SELFSERVICE: handle
 
-                } else if (node.getCallback(NameCallback.class) != null && node.getCallback(PasswordCallback.class) == null) {
+                if (node.getCallback(NameCallback.class) != null && node.getCallback(PasswordCallback.class) == null) {
                     Logger.warn(TAG, "only NameCallback");
                     NameOnlyDialogFragment fragment = NameOnlyDialogFragment.newInstance(node);
                     fragment.show(getSupportFragmentManager(), NameOnlyDialogFragment.class.getName());
 
 
-                    //TODO SUSPENDED: handle callback
+                //TODO SUSPENDED: handle callback
 
 
                 } else {

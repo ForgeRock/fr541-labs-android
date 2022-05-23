@@ -73,32 +73,8 @@ public class StringAttributesDialogFragment extends DialogFragment {
 
         LinearLayout stringAttrLayout = view.findViewById(R.id.stringAttrLayout);
 
-        //DONE REGISTER: display and obtain
-        for (Callback callback : node.getCallbacks()) {
-            if (callback instanceof StringAttributeInputCallback) {
-                StringAttributeInputCallback saiCallback = (StringAttributeInputCallback) callback;
-
-                TextInputEditText editText = new TextInputEditText(getContext());
-                stringAttrLayout.addView(editText);
-
-                editText.setHint(saiCallback.getPrompt());
-                if (!TextUtils.isEmpty(saiCallback.getValue())) {
-                    editText.setText(saiCallback.getValue());
-                }
-                editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        saiCallback.setValue(editText.getText().toString());
-                    }
-                });
-            }
-        }
+        //TODO REGISTER: display and obtain
+        
 
         Space space = new Space(getContext());
         space.setMinimumWidth(20);
