@@ -59,12 +59,10 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //DONE TAMPER
-        RootDetector rootDetector = FRRootDetector.DEFAULT;
-        Logger.warn (TAG, "RootDetector score: " + rootDetector.isRooted(this));
+        //TODO TAMPER
+               Logger.warn (TAG, "RootDetector score: " );
 
-        //DONE CUSTOMDEVICE: register
-        CallbackFactory.getInstance().register(MyCustomDeviceProfileCallback.class);
+        //TODO CUSTOMDEVICE: register
 
         //DONE SELFSERVICE: interceptor
         RequestInterceptorRegistry.getInstance().register(new ForceAuthInterceptor());
@@ -301,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     Logger.warn(TAG, "Device Profile");
                     Context context = getApplicationContext();
 
-                    //MAR CUSTOMDEVICE: note that this is actually MyCustomDeviceProfileCallback
+                    //MARK CUSTOMDEVICE: note that this is actually MyCustomDeviceProfileCallback
                     ((DeviceProfileCallback) callback).execute(context, new FRListener<Void>() {
                         @Override
                         public void onSuccess(Void result) {
