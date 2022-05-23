@@ -222,28 +222,11 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
                 //TODO DEVICE: handle choicecallback
 
-                //DONE SOCIAL: SelectIdpCallback
-                if (callback instanceof SelectIdPCallback) {
-                    Logger.warn(TAG, "SelectIdPCallback");
-                    SelectIdpDialogFragment fragment = SelectIdpDialogFragment.newInstance(node);
-                    fragment.show(getSupportFragmentManager(), SelectIdpDialogFragment.class.getName());
+                //TODO SOCIAL: SelectIdpCallback
 
-                // DONE SOCIAL: IdPCallback
-                } else if (callback instanceof IdPCallback) {
-                    Logger.warn(TAG, "IdPCallback");
-                    ((IdPCallback) callback).signIn(null, new FRListener<Void>() {
-                        @Override
-                        public void onSuccess(Void result) {
-                            node.next(MainActivity.this, MainActivity.this);
-                            updateStatus();
-                        }
 
-                        @Override
-                        public void onException(Exception e) {
-                            Logger.error(TAG, e.getMessage(), e);
-                            node.next(MainActivity.this, MainActivity.this);
-                        }
-                    });
+                //TODO SOCIAL: IdPCallback
+
 
                 //TODO WEBAUTHN: handle registration
 
@@ -254,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
 
                 //DONE REGISTER: handle
-                } else if (callback instanceof StringAttributeInputCallback) {
+                if (callback instanceof StringAttributeInputCallback) {
                     Logger.warn(TAG, "String Attribute Input Callback");
                     StringAttributesDialogFragment fragment = StringAttributesDialogFragment.newInstance(node);
                     fragment.show(getSupportFragmentManager(), StringAttributesDialogFragment.class.getName());
