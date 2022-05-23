@@ -59,13 +59,11 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
         super.onCreate(savedInstanceState);
 
         //TODO TAMPER
-        Logger.warn (TAG, "RootDetector score: " );
+        Logger.warn(TAG, "RootDetector score: ");
 
         //TODO CUSTOMDEVICE: register
 
-        //DONE SELFSERVICE: interceptor
-        RequestInterceptorRegistry.getInstance().register(new ForceAuthInterceptor());
-
+        //TODO SELFSERVICE: interceptor
 
         //DONE AUTH: init
         FRAuth.start(this);
@@ -94,31 +92,10 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
         loginButton.setOnClickListener(view -> {
             Logger.debug(TAG, "Login button is pressed");
-            //DONE SELFSERVICE:
-            if (FRUser.getCurrentUser() != null) {
-                FRSession.authenticate(getApplicationContext(), "fr541-password", new NodeListener<FRSession>() {
-                    @Override
-                    public void onCallbackReceived(Node node) {
-                        Logger.warn(TAG, "callback received in self service flow");
-                        MainActivity.this.onCallbackReceived(node);
-                    }
+            //TODO SELFSERVICE:
 
-                    @Override
-                    public void onSuccess(FRSession result) {
-                        Logger.warn(TAG, "onSuccess in selfservice flow");
-                        updateStatus();
-                    }
-
-                    @Override
-                    public void onException(Exception e) {
-                        Logger.error(TAG, e.getMessage(), e);
-                        updateStatus();
-                    }
-                });
-            } else {
-                //DONE AUTH: onclick
-                FRUser.login(getApplicationContext(), this);
-            }
+            //DONE AUTH: onclick
+            FRUser.login(getApplicationContext(), this);
         });
 
         //DONE CENTRAL: buttonListener
@@ -140,7 +117,9 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
         updateStatus();
 
-        if (getIntent() != null) {handleIntent(getIntent());}
+        if (getIntent() != null) {
+            handleIntent(getIntent());
+        }
     }
 
     private void handleIntent(Intent intent) {
@@ -161,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
     private void updateStatus() {
         runOnUiThread(() -> {
             //TODO SUSPENDED: status
-             if (FRUser.getCurrentUser() == null) {
+            if (FRUser.getCurrentUser() == null) {
                 status.setText("User is not authenticated");
                 //TODO USERINFO: get userinfo or tokeninfo and display
 
@@ -172,10 +151,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
             } else {
                 status.setText("User is authenticated");
 
-                //DONE SELFSERVICE: button
-                loginButton.setText("Chg pwd");
-                logoutButton.setEnabled(true);
-            }
+                //TODO SELFSERVICE: button
+                      }
         });
     }
 
@@ -216,11 +193,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     StringAttributesDialogFragment fragment = StringAttributesDialogFragment.newInstance(node);
                     fragment.show(getSupportFragmentManager(), StringAttributesDialogFragment.class.getName());
 
-                //DONE SELFSERVICE: handle
-                } else if (node.getCallback(NameCallback.class) == null && node.getCallback(PasswordCallback.class) != null) {
-                    Logger.warn(TAG, "only PasswordCallback");
-                    PasswordOnlyDialogFragment fragment = PasswordOnlyDialogFragment.newInstance(node);
-                    fragment.show(getSupportFragmentManager(), PasswordOnlyDialogFragment.class.getName());
+                //TODO SELFSERVICE: handle
 
                 } else if (node.getCallback(NameCallback.class) != null && node.getCallback(PasswordCallback.class) == null) {
                     Logger.warn(TAG, "only NameCallback");
@@ -228,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     fragment.show(getSupportFragmentManager(), NameOnlyDialogFragment.class.getName());
 
 
-                //TODO SUSPENDED: handle callback
+                    //TODO SUSPENDED: handle callback
 
 
                 } else {
@@ -237,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
                 }
 
-            //TODO STAGE: else ends here
+                //TODO STAGE: else ends here
             }
         });
     }
