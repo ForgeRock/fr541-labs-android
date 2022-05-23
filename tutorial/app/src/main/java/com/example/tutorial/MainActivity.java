@@ -245,40 +245,10 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                         }
                     });
 
-                //DONE WEBAUTHN: handle registration
-                } else if (callback instanceof WebAuthnRegistrationCallback) {
-                    Logger.warn(TAG, "WebAuthn Registration" + callback.getContent());
-                    ((WebAuthnRegistrationCallback) callback).register(node, new FRListener<Void>() {
-                        @Override
-                        public void onSuccess(Void result) {
-                            Logger.warn(TAG, "reg success branch");
-                            node.next(MainActivity.this, MainActivity.this);
-                        }
+                //TODO WEBAUTHN: handle registration
 
-                        @Override
-                        public void onException(Exception e) {
-                            Logger.error(TAG, e.getMessage(), e);
-                            displayToast("WebAuthn Registration Error!");
-                            node.next(MainActivity.this, MainActivity.this);
-                        }
-                    });
+                //TODO WEBAUTHN: handle authentication
 
-                //DONE WEBAUTHN: handle authentication
-                } else if (callback instanceof WebAuthnAuthenticationCallback) {
-                    Logger.warn(TAG, "Webauthn Authn");
-                    ((WebAuthnAuthenticationCallback) callback).authenticate(node, null, new FRListener<Void>() {
-                        @Override
-                        public void onSuccess(Void result) {
-                            node.next(MainActivity.this, MainActivity.this);
-                        }
-
-                        @Override
-                        public void onException(Exception e) {
-                            Logger.error(TAG, e.getMessage(), e);
-                            displayToast("WebAuthn Error (not registered?)!");
-                            node.next(MainActivity.this, MainActivity.this);
-                        }
-                    });
 
                 //TODO DEVICE: handle callback
 

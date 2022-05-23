@@ -12,7 +12,7 @@
 
     <!-- TODO LOCATION -->
 
-    <!-- DONE WEBAUTHN -->
+    <!-- MARK WEBAUTHN -->
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
@@ -48,10 +48,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tutorial">
 
-        <!-- DONE WEBAUTHN -->
-        <meta-data
-            android:name="asset_statements"
-            android:resource="@string/asset_statements" />
+        <!-- TODO WEBAUTHN: metadata -->
 
         <activity
             android:name=".MainActivity"

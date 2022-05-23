@@ -25,7 +25,7 @@
     <string name="forgerock">ForgeRock SDK Tutorial</string>
     <string name="forgerock_account_name" translatable="false">demo</string>
 
-    <!-- DONE WEBAuthN -->
+    <!-- MARK WEBAUTHN -->
     <string name="forgerock_webauthn_account_name" translatable="false">WebAuthn</string>
 
     <!-- AM Tree Details -->
@@ -41,7 +41,6 @@
     <!--<string name="forgerock_auth_service" translatable="false">fr541-webauthn-android</string>-->
     <string name="forgerock_auth_service" translatable="false">fr541</string>
 
-    <!-- DONE WEBAUTHN: WebAuthn Biometric asset statements-->
-    <string name="asset_statements" translatable="false">[{"include": "https://openam-fr300-unigeza.forgeblocks.com/.well-known/assetlinks.json"}]</string>
+    <!-- DONE WEBAUTHN: asset-->
 
 </resources>
