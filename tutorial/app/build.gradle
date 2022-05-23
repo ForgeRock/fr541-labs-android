@@ -59,6 +59,6 @@ dependencies {
     implementation 'net.openid:appauth:0.7.1'
     //TODO SOCIAL: play-services-auth
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
-    //DONE WEBAUTHN: fido
+    //TODO WEBAUTHN: fido
     implementation 'com.google.android.gms:play-services-fido:18.1.0'
 }
