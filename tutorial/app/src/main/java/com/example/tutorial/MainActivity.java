@@ -52,8 +52,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
     private Button logoutButton;
     private Button centralButton;
 
-    //DONE SUSPENDED: variable
-    private boolean isSuspended = false;
+    //TODO SUSPENDED: variable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,44 +149,19 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
         Logger.warn(TAG, "applink" + appLinkAction + ", " + intent.getDataString());
         if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null) {
 
-            //DONE SUSPENDED: resume
-            MainActivity.this.isSuspended = false;
-            FRSession.authenticate(getApplicationContext(), appLinkData, new NodeListener<FRSession>() {
-                @Override
-                public void onCallbackReceived(Node node) {
-                    Logger.warn(TAG, "link handler onCallbackReceived");
-                }
+            //TODO SUSPENDED: resume
 
-                @Override
-                public void onSuccess(FRSession result) {
-                    Logger.warn(TAG, "link handler onSuccess");
-                    updateStatus();
-                }
-
-                @Override
-                public void onException(Exception e) {
-                    Logger.warn(TAG, "link handler" + e.getMessage(), e);
-
-                }
-            });
         }
     }
 
-    //DONE SUSPENDED: newintent
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        handleIntent(intent);
-    }
+    //TODO SUSPENDED: newintent
+
 
     //Update the login status
     private void updateStatus() {
         runOnUiThread(() -> {
             //TODO SUSPENDED: status
-            if (MainActivity.this.isSuspended) {
-                status.setText("Check your email");
-                loginButton.setEnabled(false);
-            } else if (FRUser.getCurrentUser() == null) {
+             if (FRUser.getCurrentUser() == null) {
                 status.setText("User is not authenticated");
                 //TODO USERINFO: get userinfo or tokeninfo and display
 
@@ -254,11 +228,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     fragment.show(getSupportFragmentManager(), NameOnlyDialogFragment.class.getName());
 
 
-                //DONE SUSPENDED: handle callback
-                } else if (node.getCallback(SuspendedTextOutputCallback.class) != null) {
-                    Logger.warn(TAG, "suspended callback received");
-                    MainActivity.this.isSuspended = true;
-                    updateStatus();
+                //TODO SUSPENDED: handle callback
+
 
                 } else {
                     //DONE AUTH: dialog

@@ -59,16 +59,7 @@
             </intent-filter>
 
             <!-- DONE SUSPENDED -->
-            <intent-filter android:label="Resume authentication">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:host="sdkapp.example.com"
-                    android:port="8443"
-                    android:scheme="https"
-                    android:pathPrefix="/embedded-login"/>
-            </intent-filter>
+
         </activity>
 
         <!-- DONE CENTR 7: add redirect activity -->
