@@ -10,9 +10,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.tutorial">
 
-    <!-- DONE LOCATION -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- TODO LOCATION -->
 
     <!-- DONE WEBAUTHN -->
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />

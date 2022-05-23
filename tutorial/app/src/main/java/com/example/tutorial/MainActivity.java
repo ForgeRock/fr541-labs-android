@@ -71,18 +71,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
         //DONE AUTH: init
         FRAuth.start(this);
 
-        //DONE DEVICE: manually
-        FRDevice.getInstance().getProfile(new FRListener<JSONObject>() {
-            @Override
-            public void onSuccess(JSONObject result) {
-                Logger.warn(TAG, "device metadata: " + result.toString());
-            }
+        //TODO DEVICE: manually
 
-            @Override
-            public void onException(Exception e) {
-                Logger.error(TAG, "Device profile collection failed: " + e.getMessage(), e);
-            }
-        });
 
 //        //MARK DEVICE: alternative way
 //        FRDeviceCollector.DEFAULT.collect(this, new FRListener<JSONObject>() {
@@ -230,14 +220,10 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 //DONE AUTH: getcallback
                 Callback callback = node.getCallbacks().get(0);
 
-                //DONE DEVICE: handle choicecallback
-                if (callback instanceof ChoiceCallback) {
-                    Logger.warn(TAG, "ChoiceCallback");
-                    ChoiceCallbackDialogFragment fragment = ChoiceCallbackDialogFragment.newInstance(node);
-                    fragment.show(getSupportFragmentManager(), ChoiceCallbackDialogFragment.class.getName());
+                //TODO DEVICE: handle choicecallback
 
                 //DONE SOCIAL: SelectIdpCallback
-                } else if (callback instanceof SelectIdPCallback) {
+                if (callback instanceof SelectIdPCallback) {
                     Logger.warn(TAG, "SelectIdPCallback");
                     SelectIdpDialogFragment fragment = SelectIdpDialogFragment.newInstance(node);
                     fragment.show(getSupportFragmentManager(), SelectIdpDialogFragment.class.getName());
@@ -294,27 +280,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                         }
                     });
 
-                //DONE DEVICE: handle callback
-                } else if (callback instanceof DeviceProfileCallback) {
-                    Logger.warn(TAG, "Device Profile");
-                    Context context = getApplicationContext();
+                //TODO DEVICE: handle callback
 
-                    //MARK CUSTOMDEVICE: note that this is actually MyCustomDeviceProfileCallback
-                    ((DeviceProfileCallback) callback).execute(context, new FRListener<Void>() {
-                        @Override
-                        public void onSuccess(Void result) {
-                            Logger.warn(TAG, "device success branch");
-                            displayToast("Device Profile Collected");
-
-                            node.next(context, MainActivity.this);
-                        }
-
-                        @Override
-                        public void onException(Exception e) {
-                            Logger.error(TAG, e.getMessage(), e);
-                            displayToast("Device Profile collection error");
-                        }
-                    });
 
                 //DONE REGISTER: handle
                 } else if (callback instanceof StringAttributeInputCallback) {
