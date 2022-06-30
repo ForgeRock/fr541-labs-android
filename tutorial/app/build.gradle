@@ -54,7 +54,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //MARK AUTH: sdk
-    implementation 'org.forgerock:forgerock-auth:3.2.0'
+    implementation 'org.forgerock:forgerock-auth:3.3.2'
     //MARK CENTRAL: openid
     implementation 'net.openid:appauth:0.7.1'
     //MARK SOCIAL: play-services-auth
