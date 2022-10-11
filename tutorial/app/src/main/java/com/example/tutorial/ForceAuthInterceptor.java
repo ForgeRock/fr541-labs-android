@@ -23,7 +23,7 @@ public class ForceAuthInterceptor implements FRRequestInterceptor<Action> {
     @NonNull
     @Override
     public Request intercept(@NonNull Request request, Action action) {
-        if (action.getType().equals(START_AUTHENTICATE)) { //MARK: SELFSERVICE: action
+        if ("START_AUTHENTICATE".equals(action.getType()) || "AUTHENTICATE".equals(action.getType())) { //MARK: SELFSERVICE: action
             try {
                 if (action.getPayload() != null && action.getPayload().getString("tree").equals("fr541-password")) { //MARK: SELFSERVICE: treename
                     return request.newBuilder()
