@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.fido.fido2.api.common.ResidentKeyRequirement;
+
 import org.forgerock.android.auth.FRAuth;
 import org.forgerock.android.auth.FRDevice;
 import org.forgerock.android.auth.FRListener;
@@ -264,25 +266,27 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 //DONE WEBAUTHN: handle registration
                 } else if (callback instanceof WebAuthnRegistrationCallback) {
                     Logger.warn(TAG, "WebAuthn Registration" + callback.getContent());
-                    ((WebAuthnRegistrationCallback) callback).register(node, new FRListener<Void>() {
-                        @Override
-                        public void onSuccess(Void result) {
-                            Logger.warn(TAG, "reg success branch");
-                            node.next(MainActivity.this, MainActivity.this);
-                        }
+                    ((WebAuthnRegistrationCallback) callback).setResidentKeyRequirement(ResidentKeyRequirement.RESIDENT_KEY_DISCOURAGED);
+                    ((WebAuthnRegistrationCallback) callback).register(MainActivity.this , node,
+                            new FRListener<Void>() {
+                                @Override
+                                public void onSuccess(Void result) {
+                                    Logger.warn(TAG, "reg success branch");
+                                    node.next(MainActivity.this, MainActivity.this);
+                                }
 
-                        @Override
-                        public void onException(Exception e) {
-                            Logger.error(TAG, e.getMessage(), e);
-                            displayToast("WebAuthn Registration Error!");
-                            node.next(MainActivity.this, MainActivity.this);
-                        }
-                    });
+                                @Override
+                                public void onException(Exception e) {
+                                    Logger.error(TAG, e.getMessage(), e);
+                                    displayToast("WebAuthn Registration Error!");
+                                    node.next(MainActivity.this, MainActivity.this);
+                                }
+                            });
 
                 //DONE WEBAUTHN: handle authentication
                 } else if (callback instanceof WebAuthnAuthenticationCallback) {
                     Logger.warn(TAG, "Webauthn Authn");
-                    ((WebAuthnAuthenticationCallback) callback).authenticate(node, null, new FRListener<Void>() {
+                    ((WebAuthnAuthenticationCallback) callback).authenticate(MainActivity.this, node, new FRListener<Void>() {
                         @Override
                         public void onSuccess(Void result) {
                             node.next(MainActivity.this, MainActivity.this);
