@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.fido.fido2.api.common.ResidentKeyRequirement;
+
 import org.forgerock.android.auth.FRAuth;
 import org.forgerock.android.auth.FRDevice;
 import org.forgerock.android.auth.FRListener;
@@ -59,10 +61,12 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO TAMPER
-        Logger.warn (TAG, "RootDetector score: " );
+        //DONE TAMPER
+        RootDetector rootDetector = FRRootDetector.DEFAULT;
+        Logger.warn (TAG, "RootDetector score: " + rootDetector.isRooted(this));
 
-        //TODO CUSTOMDEVICE: register
+        //DONE CUSTOMDEVICE: register
+        CallbackFactory.getInstance().register(MyCustomDeviceProfileCallback.class);
 
         //DONE SELFSERVICE: interceptor
         RequestInterceptorRegistry.getInstance().register(new ForceAuthInterceptor());
@@ -71,8 +75,18 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
         //DONE AUTH: init
         FRAuth.start(this);
 
-        //TODO DEVICE: manually
+        //DONE DEVICE: manually
+        FRDevice.getInstance().getProfile(new FRListener<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                Logger.warn(TAG, "device metadata: " + result.toString());
+            }
 
+            @Override
+            public void onException(Exception e) {
+                Logger.error(TAG, "Device profile collection failed: " + e.getMessage(), e);
+            }
+        });
 
 //        //MARK DEVICE: alternative way
 //        FRDeviceCollector.DEFAULT.collect(this, new FRListener<JSONObject>() {
@@ -220,10 +234,14 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 //DONE AUTH: getcallback
                 Callback callback = node.getCallbacks().get(0);
 
-                //TODO DEVICE: handle choicecallback
+                //DONE DEVICE: handle choicecallback
+                if (callback instanceof ChoiceCallback) {
+                    Logger.warn(TAG, "ChoiceCallback");
+                    ChoiceCallbackDialogFragment fragment = ChoiceCallbackDialogFragment.newInstance(node);
+                    fragment.show(getSupportFragmentManager(), ChoiceCallbackDialogFragment.class.getName());
 
                 //DONE SOCIAL: SelectIdpCallback
-                if (callback instanceof SelectIdPCallback) {
+                } else if (callback instanceof SelectIdPCallback) {
                     Logger.warn(TAG, "SelectIdPCallback");
                     SelectIdpDialogFragment fragment = SelectIdpDialogFragment.newInstance(node);
                     fragment.show(getSupportFragmentManager(), SelectIdpDialogFragment.class.getName());
@@ -248,25 +266,27 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 //DONE WEBAUTHN: handle registration
                 } else if (callback instanceof WebAuthnRegistrationCallback) {
                     Logger.warn(TAG, "WebAuthn Registration" + callback.getContent());
-                    ((WebAuthnRegistrationCallback) callback).register(node, new FRListener<Void>() {
-                        @Override
-                        public void onSuccess(Void result) {
-                            Logger.warn(TAG, "reg success branch");
-                            node.next(MainActivity.this, MainActivity.this);
-                        }
+                    ((WebAuthnRegistrationCallback) callback).setResidentKeyRequirement(ResidentKeyRequirement.RESIDENT_KEY_DISCOURAGED);
+                    ((WebAuthnRegistrationCallback) callback).register(MainActivity.this , node,
+                            new FRListener<Void>() {
+                                @Override
+                                public void onSuccess(Void result) {
+                                    Logger.warn(TAG, "reg success branch");
+                                    node.next(MainActivity.this, MainActivity.this);
+                                }
 
-                        @Override
-                        public void onException(Exception e) {
-                            Logger.error(TAG, e.getMessage(), e);
-                            displayToast("WebAuthn Registration Error!");
-                            node.next(MainActivity.this, MainActivity.this);
-                        }
-                    });
+                                @Override
+                                public void onException(Exception e) {
+                                    Logger.error(TAG, e.getMessage(), e);
+                                    displayToast("WebAuthn Registration Error!");
+                                    node.next(MainActivity.this, MainActivity.this);
+                                }
+                            });
 
                 //DONE WEBAUTHN: handle authentication
                 } else if (callback instanceof WebAuthnAuthenticationCallback) {
                     Logger.warn(TAG, "Webauthn Authn");
-                    ((WebAuthnAuthenticationCallback) callback).authenticate(node, null, new FRListener<Void>() {
+                    ((WebAuthnAuthenticationCallback) callback).authenticate(MainActivity.this, node, new FRListener<Void>() {
                         @Override
                         public void onSuccess(Void result) {
                             node.next(MainActivity.this, MainActivity.this);
@@ -280,8 +300,27 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                         }
                     });
 
-                //TODO DEVICE: handle callback
+                //DONE DEVICE: handle callback
+                } else if (callback instanceof DeviceProfileCallback) {
+                    Logger.warn(TAG, "Device Profile");
+                    Context context = getApplicationContext();
 
+                    //MARK CUSTOMDEVICE: note that this is actually MyCustomDeviceProfileCallback
+                    ((DeviceProfileCallback) callback).execute(context, new FRListener<Void>() {
+                        @Override
+                        public void onSuccess(Void result) {
+                            Logger.warn(TAG, "device success branch");
+                            displayToast("Device Profile Collected");
+
+                            node.next(context, MainActivity.this);
+                        }
+
+                        @Override
+                        public void onException(Exception e) {
+                            Logger.error(TAG, e.getMessage(), e);
+                            displayToast("Device Profile collection error");
+                        }
+                    });
 
                 //DONE REGISTER: handle
                 } else if (callback instanceof StringAttributeInputCallback) {
