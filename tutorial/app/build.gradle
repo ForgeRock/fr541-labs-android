@@ -10,6 +10,9 @@ plugins {
 }
 
 android {
+    namespace "com.example.tutorial"
+    compileSdk 34
+
     signingConfigs {
         debug {
             storeFile rootProject.file('app/debug.keystore')
@@ -18,12 +21,11 @@ android {
             keyPassword 'android'
         }
     }
-    compileSdk 32
 
     defaultConfig {
         applicationId "com.example.tutorial"
-        minSdk 21
-        targetSdk 32
+        minSdk 23
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -39,8 +41,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
@@ -54,11 +56,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //MARK AUTH: sdk
-    implementation 'org.forgerock:forgerock-auth:3.2.0'
+    implementation 'org.forgerock:forgerock-auth:4.6.0'
     //MARK CENTRAL: openid
     implementation 'net.openid:appauth:0.7.1'
-    //TODO SOCIAL: play-services-auth
-    implementation 'com.google.android.gms:play-services-auth:19.0.0'
-    //DONE WEBAUTHN: fido
-    implementation 'com.google.android.gms:play-services-fido:18.1.0'
+    //MARK SOCIAL: play-services-auth
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
+    //MARK WEBAUTHN: fido
+    implementation 'com.google.android.gms:play-services-fido:20.0.1'
 }

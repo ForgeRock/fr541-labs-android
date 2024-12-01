@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 logoutButton.setEnabled(false);
             } else {
                 status.setText("User is authenticated");
-
+                logoutButton.setEnabled(true);
                 //TODO SELFSERVICE: button
                       }
         });
