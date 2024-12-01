@@ -17,8 +17,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.fido.fido2.api.common.ResidentKeyRequirement;
-
 import org.forgerock.android.auth.FRAuth;
 import org.forgerock.android.auth.FRDevice;
 import org.forgerock.android.auth.FRListener;
@@ -61,12 +59,10 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //DONE TAMPER
-        RootDetector rootDetector = FRRootDetector.DEFAULT;
-        Logger.warn (TAG, "RootDetector score: " + rootDetector.isRooted(this));
+        //TODO TAMPER
+        Logger.warn (TAG, "RootDetector score: " );
 
-        //DONE CUSTOMDEVICE: register
-        CallbackFactory.getInstance().register(MyCustomDeviceProfileCallback.class);
+        //TODO CUSTOMDEVICE: register
 
         //DONE SELFSERVICE: interceptor
         RequestInterceptorRegistry.getInstance().register(new ForceAuthInterceptor());
@@ -75,18 +71,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
         //DONE AUTH: init
         FRAuth.start(this);
 
-        //DONE DEVICE: manually
-        FRDevice.getInstance().getProfile(new FRListener<JSONObject>() {
-            @Override
-            public void onSuccess(JSONObject result) {
-                Logger.warn(TAG, "device metadata: " + result.toString());
-            }
+        //TODO DEVICE: manually
 
-            @Override
-            public void onException(Exception e) {
-                Logger.error(TAG, "Device profile collection failed: " + e.getMessage(), e);
-            }
-        });
 
 //        //MARK DEVICE: alternative way
 //        FRDeviceCollector.DEFAULT.collect(this, new FRListener<JSONObject>() {
@@ -234,19 +220,15 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 //DONE AUTH: getcallback
                 Callback callback = node.getCallbacks().get(0);
 
-                //DONE DEVICE: handle choicecallback
-                if (callback instanceof ChoiceCallback) {
-                    Logger.warn(TAG, "ChoiceCallback");
-                    ChoiceCallbackDialogFragment fragment = ChoiceCallbackDialogFragment.newInstance(node);
-                    fragment.show(getSupportFragmentManager(), ChoiceCallbackDialogFragment.class.getName());
+                //TODO DEVICE: handle choicecallback
 
                 //DONE SOCIAL: SelectIdpCallback
-                } else if (callback instanceof SelectIdPCallback) {
+                if (callback instanceof SelectIdPCallback) {
                     Logger.warn(TAG, "SelectIdPCallback");
                     SelectIdpDialogFragment fragment = SelectIdpDialogFragment.newInstance(node);
                     fragment.show(getSupportFragmentManager(), SelectIdpDialogFragment.class.getName());
 
-                // DONE SOCIAL: IdPCallback
+                    // DONE SOCIAL: IdPCallback
                 } else if (callback instanceof IdPCallback) {
                     Logger.warn(TAG, "IdPCallback");
                     ((IdPCallback) callback).signIn(null, new FRListener<Void>() {
@@ -263,27 +245,25 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                         }
                     });
 
-                //DONE WEBAUTHN: handle registration
+                    //DONE WEBAUTHN: handle registration
                 } else if (callback instanceof WebAuthnRegistrationCallback) {
                     Logger.warn(TAG, "WebAuthn Registration" + callback.getContent());
-                    ((WebAuthnRegistrationCallback) callback).setResidentKeyRequirement(ResidentKeyRequirement.RESIDENT_KEY_DISCOURAGED);
-                    ((WebAuthnRegistrationCallback) callback).register(MainActivity.this , node,
-                            new FRListener<Void>() {
-                                @Override
-                                public void onSuccess(Void result) {
-                                    Logger.warn(TAG, "reg success branch");
-                                    node.next(MainActivity.this, MainActivity.this);
-                                }
+                    ((WebAuthnRegistrationCallback) callback).register(MainActivity.this, node, new FRListener<Void>() {
+                        @Override
+                        public void onSuccess(Void result) {
+                            Logger.warn(TAG, "reg success branch");
+                            node.next(MainActivity.this, MainActivity.this);
+                        }
 
-                                @Override
-                                public void onException(Exception e) {
-                                    Logger.error(TAG, e.getMessage(), e);
-                                    displayToast("WebAuthn Registration Error!");
-                                    node.next(MainActivity.this, MainActivity.this);
-                                }
-                            });
+                        @Override
+                        public void onException(Exception e) {
+                            Logger.error(TAG, e.getMessage(), e);
+                            displayToast("WebAuthn Registration Error!");
+                            node.next(MainActivity.this, MainActivity.this);
+                        }
+                    });
 
-                //DONE WEBAUTHN: handle authentication
+                    //DONE WEBAUTHN: handle authentication
                 } else if (callback instanceof WebAuthnAuthenticationCallback) {
                     Logger.warn(TAG, "Webauthn Authn");
                     ((WebAuthnAuthenticationCallback) callback).authenticate(MainActivity.this, node, new FRListener<Void>() {
@@ -300,35 +280,16 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                         }
                     });
 
-                //DONE DEVICE: handle callback
-                } else if (callback instanceof DeviceProfileCallback) {
-                    Logger.warn(TAG, "Device Profile");
-                    Context context = getApplicationContext();
+                    //TODO DEVICE: handle callback
 
-                    //MARK CUSTOMDEVICE: note that this is actually MyCustomDeviceProfileCallback
-                    ((DeviceProfileCallback) callback).execute(context, new FRListener<Void>() {
-                        @Override
-                        public void onSuccess(Void result) {
-                            Logger.warn(TAG, "device success branch");
-                            displayToast("Device Profile Collected");
 
-                            node.next(context, MainActivity.this);
-                        }
-
-                        @Override
-                        public void onException(Exception e) {
-                            Logger.error(TAG, e.getMessage(), e);
-                            displayToast("Device Profile collection error");
-                        }
-                    });
-
-                //DONE REGISTER: handle
+                    //DONE REGISTER: handle
                 } else if (callback instanceof StringAttributeInputCallback) {
                     Logger.warn(TAG, "String Attribute Input Callback");
                     StringAttributesDialogFragment fragment = StringAttributesDialogFragment.newInstance(node);
                     fragment.show(getSupportFragmentManager(), StringAttributesDialogFragment.class.getName());
 
-                //DONE SELFSERVICE: handle
+                    //DONE SELFSERVICE: handle
                 } else if (node.getCallback(NameCallback.class) == null && node.getCallback(PasswordCallback.class) != null) {
                     Logger.warn(TAG, "only PasswordCallback");
                     PasswordOnlyDialogFragment fragment = PasswordOnlyDialogFragment.newInstance(node);
@@ -340,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     fragment.show(getSupportFragmentManager(), NameOnlyDialogFragment.class.getName());
 
 
-                //DONE SUSPENDED: handle callback
+                    //DONE SUSPENDED: handle callback
                 } else if (node.getCallback(SuspendedTextOutputCallback.class) != null) {
                     Logger.warn(TAG, "suspended callback received");
                     MainActivity.this.isSuspended = true;
@@ -352,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
                 }
 
-            //TODO STAGE: else ends here
+                //TODO STAGE: else ends here
             }
         });
     }
