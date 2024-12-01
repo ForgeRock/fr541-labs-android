@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        FRAuth.start(this);
+
         //TODO TAMPER
         Logger.warn(TAG, "RootDetector score: ");
 
@@ -149,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 logoutButton.setEnabled(false);
             } else {
                 status.setText("User is authenticated");
-
+                logoutButton.setEnabled(true);
                 //TODO SELFSERVICE: button
                       }
         });
@@ -209,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
     public void onSuccess(FRUser result) {
         Logger.debug(TAG, "onSuccess in MainActivity");
         updateStatus();
-
     }
 
     @Override
