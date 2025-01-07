@@ -41,6 +41,6 @@
     <!--<string name="forgerock_auth_service" translatable="false">fr541-webauthn-android</string>-->
     <string name="forgerock_auth_service" translatable="false">fr541</string>
 
-    <!-- DONE WEBAUTHN: asset-->
+    <!-- TODO WEBAUTHN: asset-->
 
 </resources>
