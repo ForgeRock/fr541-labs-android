@@ -197,14 +197,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
                 //TODO SELFSERVICE: handle
 
-                } else if (node.getCallback(NameCallback.class) != null && node.getCallback(PasswordCallback.class) == null) {
-                    Logger.warn(TAG, "only NameCallback");
-                    NameOnlyDialogFragment fragment = NameOnlyDialogFragment.newInstance(node);
-                    fragment.show(getSupportFragmentManager(), NameOnlyDialogFragment.class.getName());
-
-
-                    //TODO SUSPENDED: handle callback
-
+                // TODO SUSPENDED: handle callback
 
                 } else {
                     //DONE AUTH: dialog
