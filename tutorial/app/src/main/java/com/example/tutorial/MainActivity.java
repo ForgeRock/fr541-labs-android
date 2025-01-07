@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.fido.fido2.api.common.ResidentKeyRequirement;
+
 import org.forgerock.android.auth.FRAuth;
 import org.forgerock.android.auth.FRDevice;
 import org.forgerock.android.auth.FRListener;
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
         //TODO CUSTOMDEVICE: register
 
         //TODO SELFSERVICE: interceptor
+
+        Logger.set(Logger.Level.DEBUG);
 
         //DONE AUTH: init
         FRAuth.start(this);
@@ -171,9 +175,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
                 //TODO SOCIAL: SelectIdpCallback
 
-
                 //TODO SOCIAL: IdPCallback
-
 
                 //TODO WEBAUTHN: handle registration
 
@@ -185,23 +187,13 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
                 //TODO REGISTER: handle
 
-
                 //TODO SELFSERVICE: handle
-
-                if (node.getCallback(NameCallback.class) != null && node.getCallback(PasswordCallback.class) == null) {
-                    Logger.warn(TAG, "only NameCallback");
-                    NameOnlyDialogFragment fragment = NameOnlyDialogFragment.newInstance(node);
-                    fragment.show(getSupportFragmentManager(), NameOnlyDialogFragment.class.getName());
-
 
                 //TODO SUSPENDED: handle callback
 
-
-                } else {
-                    //DONE AUTH: dialog
-                    NodeDialogFragment fragment = NodeDialogFragment.newInstance(node);
-                    fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
-                }
+                //DONE AUTH: dialog
+                NodeDialogFragment fragment = NodeDialogFragment.newInstance(node);
+                fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
 
                 //MARK STAGE: else ends here
 //            }
