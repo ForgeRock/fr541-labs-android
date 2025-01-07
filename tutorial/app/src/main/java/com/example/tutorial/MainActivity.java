@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.fido.fido2.api.common.ResidentKeyRequirement;
+
 import org.forgerock.android.auth.FRAuth;
 import org.forgerock.android.auth.FRDevice;
 import org.forgerock.android.auth.FRListener;
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        FRAuth.start(this);
+
         //TODO TAMPER
         Logger.warn(TAG, "RootDetector score: ");
 
@@ -65,7 +69,10 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
         //TODO SELFSERVICE: interceptor
 
-        //TODO AUTH: init
+        Logger.set(Logger.Level.DEBUG);
+
+        //DONE AUTH: init
+        FRAuth.start(this);
 
         //TODO DEVICE: manually
 
@@ -136,12 +143,13 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 status.setText("User is not authenticated");
                 //TODO USERINFO: get userinfo or tokeninfo and display
 
+                //DONE CENTRAL: setEnabled
                 loginButton.setText("Login");
                 loginButton.setEnabled(true);
                 logoutButton.setEnabled(false);
             } else {
                 status.setText("User is authenticated");
-
+                logoutButton.setEnabled(true);
                 //TODO SELFSERVICE: button
                       }
         });
@@ -151,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
     public void onCallbackReceived(Node node) {
         runOnUiThread(() -> {
 
-            //DONE FOLLOW: handle
             //TODO STAGE: if
 
 
@@ -161,36 +168,23 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
                 //TODO SOCIAL: SelectIdpCallback
 
-
                 //TODO SOCIAL: IdPCallback
-
 
                 //TODO WEBAUTHN: handle registration
 
                 //TODO WEBAUTHN: handle authentication
 
-
                 //TODO DEVICE: handle callback
-
 
                 //TODO REGISTER: handle
 
-
                 //TODO SELFSERVICE: handle
-
-                if (node.getCallback(NameCallback.class) != null && node.getCallback(PasswordCallback.class) == null) {
-                    Logger.warn(TAG, "only NameCallback");
-                    NameOnlyDialogFragment fragment = NameOnlyDialogFragment.newInstance(node);
-                    fragment.show(getSupportFragmentManager(), NameOnlyDialogFragment.class.getName());
-
 
                 //TODO SUSPENDED: handle callback
 
-
-                } else {
-                    //TODO AUTH: dialog
-
-                }
+                //DONE AUTH: dialog
+                NodeDialogFragment fragment = NodeDialogFragment.newInstance(node);
+                fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
 
                 //MARK STAGE: else ends here
 //            }
@@ -201,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
     public void onSuccess(FRUser result) {
         Logger.debug(TAG, "onSuccess in MainActivity");
         updateStatus();
-
     }
 
     @Override
