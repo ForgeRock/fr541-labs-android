@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 status.setText("User is not authenticated");
                 //TODO USERINFO: get userinfo or tokeninfo and display
 
-                //DONE CENTR 11: comment setEnabled
+                //DONE CENTRAL: setEnabled
                 loginButton.setText("Login");
                 loginButton.setEnabled(true);
                 logoutButton.setEnabled(false);
@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
     public void onCallbackReceived(Node node) {
         runOnUiThread(() -> {
 
-            //DONE FOLLOW: handle
             //TODO STAGE: if
 
 
@@ -182,9 +181,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
                 //TODO WEBAUTHN: handle authentication
 
-
                 //TODO DEVICE: handle callback
-
 
                 //TODO REGISTER: handle
 
