@@ -191,16 +191,13 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
                 //TODO REGISTER: handle
 
-
                 //TODO SELFSERVICE: handle
 
-                // TODO SUSPENDED: handle callback
+                //TODO SUSPENDED: handle callback
 
-                } else {
-                    //DONE AUTH: dialog
-                    NodeDialogFragment fragment = NodeDialogFragment.newInstance(node);
-                    fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
-                }
+                //DONE AUTH: dialog
+                NodeDialogFragment fragment = NodeDialogFragment.newInstance(node);
+                fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
 
                 //TODO STAGE: else ends here
             }
