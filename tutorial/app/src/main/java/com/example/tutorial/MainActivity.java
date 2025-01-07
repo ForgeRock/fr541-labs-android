@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.fido.fido2.api.common.ResidentKeyRequirement;
+
 import org.forgerock.android.auth.FRAuth;
 import org.forgerock.android.auth.FRDevice;
 import org.forgerock.android.auth.FRListener;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
         //DONE SELFSERVICE: interceptor
         RequestInterceptorRegistry.getInstance().register(new ForceAuthInterceptor());
 
+        Logger.set(Logger.Level.DEBUG);
 
         //DONE AUTH: init
         FRAuth.start(this);
@@ -228,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     SelectIdpDialogFragment fragment = SelectIdpDialogFragment.newInstance(node);
                     fragment.show(getSupportFragmentManager(), SelectIdpDialogFragment.class.getName());
 
-                // DONE SOCIAL: IdPCallback
+                    // DONE SOCIAL: IdPCallback
                 } else if (callback instanceof IdPCallback) {
                     Logger.warn(TAG, "IdPCallback");
                     ((IdPCallback) callback).signIn(null, new FRListener<Void>() {
@@ -253,13 +256,13 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                 //TODO DEVICE: handle callback
 
 
-                //DONE REGISTER: handle
+                    //DONE REGISTER: handle
                 } else if (callback instanceof StringAttributeInputCallback) {
                     Logger.warn(TAG, "String Attribute Input Callback");
                     StringAttributesDialogFragment fragment = StringAttributesDialogFragment.newInstance(node);
                     fragment.show(getSupportFragmentManager(), StringAttributesDialogFragment.class.getName());
 
-                //DONE SELFSERVICE: handle
+                    //DONE SELFSERVICE: handle
                 } else if (node.getCallback(NameCallback.class) == null && node.getCallback(PasswordCallback.class) != null) {
                     Logger.warn(TAG, "only PasswordCallback");
                     PasswordOnlyDialogFragment fragment = PasswordOnlyDialogFragment.newInstance(node);
@@ -271,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     fragment.show(getSupportFragmentManager(), NameOnlyDialogFragment.class.getName());
 
 
-                //DONE SUSPENDED: handle callback
+                    //DONE SUSPENDED: handle callback
                 } else if (node.getCallback(SuspendedTextOutputCallback.class) != null) {
                     Logger.warn(TAG, "suspended callback received");
                     MainActivity.this.isSuspended = true;
@@ -283,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
                 }
 
-            //TODO STAGE: else ends here
+                //TODO STAGE: else ends here
             }
         });
     }

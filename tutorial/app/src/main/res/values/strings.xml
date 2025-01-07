@@ -16,7 +16,7 @@
     <integer name="forgerock_oauth_threshold" translatable="false">30</integer>
 
     <!-- AM Instance Details -->
-    <string name="forgerock_url" translatable="false">https://openam-fr300-unigeza.forgeblocks.com/am</string>
+    <string name="forgerock_url" translatable="false">https://yourtenant.forgeblocks.com/am</string>
     <string name="forgerock_cookie_name" translatable="false">af6e3c362736235</string>
     <string name="forgerock_realm" translatable="false">alpha</string>
     <integer name="forgerock_timeout" translatable="false">30</integer>
