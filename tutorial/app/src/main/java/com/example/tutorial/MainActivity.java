@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
         //DONE SELFSERVICE: interceptor
         RequestInterceptorRegistry.getInstance().register(new ForceAuthInterceptor());
 
+        Logger.set(Logger.Level.DEBUG);
 
         //DONE AUTH: init
         FRAuth.start(this);
