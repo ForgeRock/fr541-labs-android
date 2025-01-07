@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.fido.fido2.api.common.ResidentKeyRequirement;
+
 import org.forgerock.android.auth.FRAuth;
 import org.forgerock.android.auth.FRDevice;
 import org.forgerock.android.auth.FRListener;
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
         //DONE SELFSERVICE: interceptor
         RequestInterceptorRegistry.getInstance().register(new ForceAuthInterceptor());
 
+        Logger.set(Logger.Level.DEBUG);
 
         //DONE AUTH: init
         FRAuth.start(this);
@@ -198,9 +201,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
 
                 //TODO SOCIAL: SelectIdpCallback
 
-
                 //TODO SOCIAL: IdPCallback
-
 
                 //TODO WEBAUTHN: handle registration
 
@@ -216,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     StringAttributesDialogFragment fragment = StringAttributesDialogFragment.newInstance(node);
                     fragment.show(getSupportFragmentManager(), StringAttributesDialogFragment.class.getName());
 
-                //DONE SELFSERVICE: handle
+                    //DONE SELFSERVICE: handle
                 } else if (node.getCallback(NameCallback.class) == null && node.getCallback(PasswordCallback.class) != null) {
                     Logger.warn(TAG, "only PasswordCallback");
                     PasswordOnlyDialogFragment fragment = PasswordOnlyDialogFragment.newInstance(node);
@@ -237,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements NodeListener<FRUs
                     fragment.show(getSupportFragmentManager(), NodeDialogFragment.class.getName());
                 }
 
-            //TODO STAGE: else ends here
+                //TODO STAGE: else ends here
             }
         });
     }
