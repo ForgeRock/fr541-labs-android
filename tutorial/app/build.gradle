@@ -17,7 +17,7 @@ android {
         debug {
             storeFile rootProject.file('app/debug.keystore')
             storePassword 'android'
-            keyAlias 'androiddebugkey'
+            keyAlias 'androiddebugkey2'
             keyPassword 'android'
         }
     }
